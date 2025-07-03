@@ -41,3 +41,12 @@ button.addEventListener("click", function (e) {
     });
   }
 });
+
+let clearButton = document.querySelector("#clear-button")
+clearButton.addEventListener("click", function(e) {
+    let cell = document.querySelector(".cell")
+    let cells = document.querySelectorAll(".cell")
+    for (let cell of cells) {
+        cell.style.backgroundColor = "white"
+    }
+});
