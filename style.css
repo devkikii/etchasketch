@@ -1,12 +1,35 @@
 body {
     display: flex;
-    justify-content: center;
+    margin-left: -200px;
+    gap: 50px;
+    justify-content:center;
     align-items: center;
 }
+
 #grid-container {
+    margin-top: 80px;
     width: 512px;
     display: flex;
     flex-wrap: wrap;
     background-color: black;
     padding: 1px 1px 1px 1px;
+}
+
+#button {
+    margin-bottom: 320px;
+    background: linear-gradient(135deg, #6b73ff 0%, #000dff 100%);
+    border: none;
+    border-radius: 8px;
+    color: white;
+    padding: 12px 24px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(107, 115, 255, 0.4);
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#button:hover {
+    background: linear-gradient(135deg, #000dff 0%, #6b73ff 100%);
+    transform: scale(1.05);
 }
