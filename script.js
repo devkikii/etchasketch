@@ -7,7 +7,7 @@ const button = document.querySelector("#button");
 const clearButton = document.querySelector("#clear-button");
 const eraser = document.querySelector("#eraser");
 const draw = document.querySelector("#draw");
-const rainbow = document.querySelector("#rainbow")
+const rainbow = document.querySelector("#rainbow");
 
 // === FUNCTION TO CREATE A GRID OF CELLS ===
 function createGrid(n) {
@@ -33,6 +33,13 @@ function createGrid(n) {
         cell.style.backgroundColor = "blue";
       } else if (mode === "erase") {
         cell.style.backgroundColor = "white";
+      } else if (mode === "rainbow") {
+        let letters = "0123456789ABCDEF";
+        let color = "#";
+        for (let i = 0; i < 6; i++) {
+          color += letters[Math.floor(Math.random() * 16)];
+        }
+        cell.style.backgroundColor = color;
       }
     });
 
@@ -63,12 +70,13 @@ button.addEventListener("click", () => {
 // === EVENT: "Clear" Button Click ===
 clearButton.addEventListener("click", () => {
   const cells = document.querySelectorAll(".cell");
-  cells.forEach(cell => {
+  cells.forEach((cell) => {
     cell.style.backgroundColor = "white";
   });
+// === EVENT: "Rainbow Mode" ===
 });
 
-// === EVENTS: Toggle Between Draw and Erase Modes ===
+// === EVENTS: Toggle Between Draw, Erase and Rainbow Mode ===
 draw.addEventListener("click", () => {
   mode = "draw";
 });
@@ -77,17 +85,6 @@ eraser.addEventListener("click", () => {
   mode = "erase";
 });
 
-// === EVENT: "Rainbow Mode" ===
-rainbow.addEventListener("click", (e) => {
-  const cells = document.querySelectorAll(".cell")
-  for (let cell of cells) {
-    cell.addEventListener("mouseenter", (e) => {
-      let letters = '0123456789ABCDEF';
-      let color = '#';
-      for (let i = 0; i < 6; i++) {
-        color += letters[Math.floor(Math.random()* 16)];
-      }
-      cell.style.backgroundColor = color
-    });
-  }
+rainbow.addEventListener("click", () => {
+  mode = "rainbow";
 });
