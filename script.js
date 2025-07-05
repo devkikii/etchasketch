@@ -73,7 +73,6 @@ clearButton.addEventListener("click", () => {
   cells.forEach((cell) => {
     cell.style.backgroundColor = "white";
   });
-// === EVENT: "Rainbow Mode" ===
 });
 
 // === EVENTS: Toggle Between Draw, Erase and Rainbow Mode ===
