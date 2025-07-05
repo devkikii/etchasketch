@@ -7,6 +7,7 @@ const button = document.querySelector("#button");
 const clearButton = document.querySelector("#clear-button");
 const eraser = document.querySelector("#eraser");
 const draw = document.querySelector("#draw");
+const rainbow = document.querySelector("#rainbow")
 
 // === FUNCTION TO CREATE A GRID OF CELLS ===
 function createGrid(n) {
@@ -74,4 +75,19 @@ draw.addEventListener("click", () => {
 
 eraser.addEventListener("click", () => {
   mode = "erase";
+});
+
+// === EVENT: "Rainbow Mode" ===
+rainbow.addEventListener("click", (e) => {
+  const cells = document.querySelectorAll(".cell")
+  for (let cell of cells) {
+    cell.addEventListener("mouseenter", (e) => {
+      let letters = '0123456789ABCDEF';
+      let color = '#';
+      for (let i = 0; i < 6; i++) {
+        color += letters[Math.floor(Math.random()* 16)];
+      }
+      cell.style.backgroundColor = color
+    });
+  }
 });

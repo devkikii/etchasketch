@@ -5,7 +5,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: flex-start;
-    font-family: Arial, sans-serif;
+    font-family: Arial, sans-serif; 
+    background-color: #1a1a1a;
 }
 
 #buttons {
