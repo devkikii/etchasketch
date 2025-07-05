@@ -1,52 +1,32 @@
+// === MODE TOGGLE VARIABLE (default is 'draw') ===
 let mode = "draw";
 
-let container = document.querySelector("#grid-container");
+// === DOM ELEMENTS ===
+const container = document.querySelector("#grid-container");
+const button = document.querySelector("#button");
+const clearButton = document.querySelector("#clear-button");
+const eraser = document.querySelector("#eraser");
+const draw = document.querySelector("#draw");
 
-for (let i = 0; i < 256; i++) {
-  let cell = document.createElement("div");
-  cell.style.width = "30px";
-  cell.style.height = "30px";
-  cell.style.backgroundColor = "white";
-  cell.style.margin = "1px";
-  cell.classList.add("cell");
-  container.appendChild(cell);
-  cell.addEventListener("mouseenter", () => {
-    if (mode === "draw") {
-      cell.style.backgroundColor = "blue";
-    } else if (mode === "erase") {
-      cell.style.backgroundColor = "white";
-    }
-  });
-}
-
-let button = document.querySelector("#button");
-button.addEventListener("click", () => {
-  let input = prompt("How Many Cells Do You Want");
-  if (input === null) return;
-
-  let n = Number(input);
-  while (isNaN(n) || n < 1 || n >= 100) {
-    input = prompt("Please type a valid Number ( > 1, < 100)");
-    if (input === null) return;
-    n = Number(input);
-  }
-
-  let cellSize = 512 / n - 2;
-
+// === FUNCTION TO CREATE A GRID OF CELLS ===
+function createGrid(n) {
+  // Clear existing grid
   while (container.hasChildNodes()) {
     container.removeChild(container.firstChild);
   }
 
-  for (let i = 0; i < n * n; i++) {
-    let cell = document.createElement("div");
-    cell.style.width = cellSize + "px";
-    cell.style.height = cellSize + "px";
-    cell.style.boxSizing = "border-box";
-    cell.style.backgroundColor = "white";
-    cell.style.margin = "1px";
-    cell.classList.add("cell");
-    container.appendChild(cell);
+  const cellSize = 512 / n - 2; // Dynamic sizing so grid fits into 512px
 
+  for (let i = 0; i < n * n; i++) {
+    const cell = document.createElement("div");
+    cell.classList.add("cell");
+    cell.style.width = `${cellSize}px`;
+    cell.style.height = `${cellSize}px`;
+    cell.style.margin = "1px";
+    cell.style.backgroundColor = "white";
+    cell.style.boxSizing = "border-box";
+
+    // Color the cell when hovered based on current mode
     cell.addEventListener("mouseenter", () => {
       if (mode === "draw") {
         cell.style.backgroundColor = "blue";
@@ -54,19 +34,44 @@ button.addEventListener("click", () => {
         cell.style.backgroundColor = "white";
       }
     });
+
+    container.appendChild(cell);
   }
+}
+
+// === INITIAL 16x16 GRID ===
+createGrid(16);
+
+// === EVENT: "Resize Grid" Button Click ===
+button.addEventListener("click", () => {
+  let input = prompt("How Many Cells Do You Want");
+  if (input === null) return; // Cancelled
+
+  let n = Number(input);
+
+  // Validate input
+  while (isNaN(n) || n < 1 || n >= 100) {
+    input = prompt("Please type a valid number ( > 1, < 100)");
+    if (input === null) return;
+    n = Number(input);
+  }
+
+  createGrid(n);
 });
 
-let clearButton = document.querySelector("#clear-button");
+// === EVENT: "Clear" Button Click ===
 clearButton.addEventListener("click", () => {
-  let cells = document.querySelectorAll(".cell");
-  for (let cell of cells) {
+  const cells = document.querySelectorAll(".cell");
+  cells.forEach(cell => {
     cell.style.backgroundColor = "white";
-  }
+  });
 });
 
-let eraser = document.querySelector("#eraser");
-let draw = document.querySelector("#draw");
+// === EVENTS: Toggle Between Draw and Erase Modes ===
+draw.addEventListener("click", () => {
+  mode = "draw";
+});
 
-draw.addEventListener("click", () => mode = "draw");
-eraser.addEventListener("click", () => mode = "erase");
+eraser.addEventListener("click", () => {
+  mode = "erase";
+});
