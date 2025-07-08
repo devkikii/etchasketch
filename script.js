@@ -1,5 +1,8 @@
 // === MODE TOGGLE VARIABLE (default is 'draw') ===
 let mode = "draw";
+let isMouseDown = false;
+document.body.addEventListener("mousedown", () => (isMouseDown = true));
+document.body.addEventListener("mouseup", () => (isMouseDown = false));
 
 // === DOM ELEMENTS ===
 const container = document.querySelector("#grid-container");
@@ -8,6 +11,21 @@ const clearButton = document.querySelector("#clear-button");
 const eraser = document.querySelector("#eraser");
 const draw = document.querySelector("#draw");
 const rainbow = document.querySelector("#rainbow");
+
+function colorCell(cell) {
+  if (mode === "draw") {
+    cell.style.backgroundColor = "blue";
+  } else if (mode === "erase") {
+    cell.style.backgroundColor = "white";
+  } else if (mode === "rainbow") {
+    let letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    cell.style.backgroundColor = color;
+  }
+}
 
 // === FUNCTION TO CREATE A GRID OF CELLS ===
 function createGrid(n) {
@@ -28,18 +46,13 @@ function createGrid(n) {
     cell.style.boxSizing = "border-box";
 
     // Color the cell when hovered based on current mode
+    cell.addEventListener("mousedown", () => {
+      colorCell(cell);
+    });
+
     cell.addEventListener("mouseenter", () => {
-      if (mode === "draw") {
-        cell.style.backgroundColor = "blue";
-      } else if (mode === "erase") {
-        cell.style.backgroundColor = "white";
-      } else if (mode === "rainbow") {
-        let letters = "0123456789ABCDEF";
-        let color = "#";
-        for (let i = 0; i < 6; i++) {
-          color += letters[Math.floor(Math.random() * 16)];
-        }
-        cell.style.backgroundColor = color;
+      if (isMouseDown) {
+        colorCell(cell);
       }
     });
 
@@ -58,8 +71,8 @@ button.addEventListener("click", () => {
   let n = Number(input);
 
   // Validate input
-  while (isNaN(n) || n < 1 || n >= 100) {
-    input = prompt("Please type a valid number ( > 1, < 100)");
+  while (isNaN(n) || n < 1 || n >= 64) {
+    input = prompt("Please type a valid number ( > 1, < 64)");
     if (input === null) return;
     n = Number(input);
   }
