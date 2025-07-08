@@ -1,8 +1,12 @@
 // === MODE TOGGLE VARIABLE (default is 'draw') ===
 let mode = "draw";
+
+// === NEW: Track whether the mouse is held down ===
 let isMouseDown = false;
 document.body.addEventListener("mousedown", () => (isMouseDown = true));
 document.body.addEventListener("mouseup", () => (isMouseDown = false));
+window.addEventListener("mouseleave", () => (isMouseDown = false)); // Fixes stuck drawing after mouse leaves grid
+
 
 // === DOM ELEMENTS ===
 const container = document.querySelector("#grid-container");
@@ -12,6 +16,7 @@ const eraser = document.querySelector("#eraser");
 const draw = document.querySelector("#draw");
 const rainbow = document.querySelector("#rainbow");
 
+// === NEW: Extracted cell coloring into reusable function ===
 function colorCell(cell) {
   if (mode === "draw") {
     cell.style.backgroundColor = "blue";
@@ -45,14 +50,15 @@ function createGrid(n) {
     cell.style.backgroundColor = "white";
     cell.style.boxSizing = "border-box";
 
-    // Color the cell when hovered based on current mode
+    // === CHANGED: Replaced inline color logic with reusable function
+    // === ADDED: Support for drag-drawing using mouseenter
     cell.addEventListener("mousedown", () => {
-      colorCell(cell);
+      colorCell(cell); // Cwindow.addEventListener("mouseleave", () => (isMouseDown = false));olor on click
     });
 
     cell.addEventListener("mouseenter", () => {
       if (isMouseDown) {
-        colorCell(cell);
+        colorCell(cell); // Color on drag
       }
     });
 
