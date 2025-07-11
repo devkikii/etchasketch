@@ -50,7 +50,6 @@ function createGrid(n) {
     cell.style.backgroundColor = "white";
     cell.style.boxSizing = "border-box";
 
-    // === CHANGED: Replaced inline color logic with reusable function
     // === ADDED: Support for drag-drawing using mouseenter
     cell.addEventListener("mousedown", () => {
       colorCell(cell); // Cwindow.addEventListener("mouseleave", () => (isMouseDown = false));olor on click
