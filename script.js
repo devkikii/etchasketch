@@ -52,7 +52,7 @@ function createGrid(n) {
 
     // === ADDED: Support for drag-drawing using mouseenter
     cell.addEventListener("mousedown", () => {
-      colorCell(cell); // Cwindow.addEventListener("mouseleave", () => (isMouseDown = false));olor on click
+      colorCell(cell);
     });
 
     cell.addEventListener("mouseenter", () => {
