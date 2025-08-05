@@ -45,8 +45,6 @@ etch-a-sketch/
 
 2. Open `index.html` in your browser:
 
-   open index.html
-
 ---
 
 ## 📋 Notes
